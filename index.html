@@ -80,9 +80,14 @@
 			<form role="form" autocomplete="on" class="h-full flex flex-col">
 				<h1><input id="headline" type="text" class="text-center uppercase text-9xl w-full font-bold placeholder-gray-300 outline-none" placeholder="Headline" /></h1>
 
-				<img class="rounded-sm shadow-md relative mt-2 mr-auto mb-2 ml-auto w-3/4" id="image" />
+				<div>
+					<img id="image"class="rounded-sm shadow-md relative" style="display: none;" />
+					<div id="placeholder" class="w-3/4 mb-2 ml-auto mr-auto text-center no-print border border-dotted border-pink-800 flex flex-col items-center justify-evenly" style="min-height: 20rem;">
+						<p>Image placeholder</p>
+						<input id="file" type="file" accept="image/*" />
+					</div>
+				</div>
 				<div class="text-center text-6xl"><input id="name" type="text" class="font-bold text-center outline-none" placeholder="Name" /></div>
-				<div class="text-center no-print"><input id="file" type="file" accept="image/*" /></div>
 
 				
 				<div contenteditable id="content" class="flex-grow mb-4 text-5xl resize-none w-full h-full overflow-auto outline-none border border-dotted border-pink-800">
@@ -180,7 +185,7 @@
 			    		aImg.src = e.target.result;
 			    		resizeContent(content);
 			    		image.style.display = 'block';
-			    		fileButton.style.display = 'none';
+			    		placeholder.style.display = 'none';
 			    	};
 			    })(image);
 			    reader.readAsDataURL(file);
@@ -189,7 +194,7 @@
 			// Hide image
 			image.addEventListener('click', function () {
 				image.style.display = 'none';
-				fileButton.style.display = 'block';
+				placeholder.style.display = 'flex';
 			})
 
 
