@@ -109,10 +109,13 @@
 		</div>
 
 		<div id="helper" class="absolute top-5 right-5 p-5 w-96 bg-pink-800 shadow-lg rounded-3xl text-white no-print">
-			<p>Please add a&nbsp;headline, a&nbsp;photo, a&nbsp;name, a&nbsp;description, your&nbsp;name and phone&nbsp;number of your loss.</p>
-			<p>The qr code at the bottom of the page can be scanned for phone number</p> 
-			<p>Use your browser print dialog to create a pdf or print directly.</p>
-			<p>This dialog, file selector and border around description will be hidden automatically.</p>
+			<div class="relative">
+				<p>Please add a&nbsp;headline, a&nbsp;photo, a&nbsp;name, a&nbsp;description, your&nbsp;name and phone&nbsp;number of your loss.</p>
+				<p>The qr code at the bottom of the page can be scanned for phone number</p> 
+				<p>Use your browser print dialog to create a pdf or print directly.</p>
+				<p>This dialog, file selector and border around description will be hidden automatically.</p>
+				<div id="close" class="absolute top-0 right-0 leading-none cursor-pointer">&#10006;</div>
+			</div>
 		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
@@ -123,8 +126,12 @@
 			const content = document.getElementById('content');
 			const contact = document.getElementById('contact');
 			const tel = document.getElementById('tel');
+
 			const fileButton = document.getElementById('file');
 			const image = document.getElementById('image');
+
+			const helper = document.getElementById('helper');
+			const close = document.getElementById('close');
 
 			// LocalStorage
 			const storable = [headline, name, content, tel, contact];
@@ -155,8 +162,12 @@
 
 			// Resize text area
 			content.addEventListener('input', function (e) {
-				
 				resizeContent(e.target);
+			});
+
+			// Close helper
+			close.addEventListener('click', function () {
+				helper.style.display = 'none';
 			});
 
 			// Add qrcode
