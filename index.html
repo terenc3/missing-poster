@@ -93,7 +93,7 @@
 				<div class="flex">
 					<div class="flex-grow">
 						<div class="p-8 mr-20 bg-pink-800 shadow-lg rounded-3xl text-4xl">
-							<input id="person" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Contact" />
+							<input id="contact" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Contact" />
 							<input id="tel" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Phone" />
 						</div>
 					</div>
@@ -116,9 +116,30 @@
 			const headline = document.getElementById('headline');
 			const name = document.getElementById('name');
 			const content = document.getElementById('content');
+			const contact = document.getElementById('contact');
 			const tel = document.getElementById('tel');
 			const fileButton = document.getElementById('file');
 			const image = document.getElementById('image');
+
+			// LocalStorage
+			const storable = [headline, name, content, tel, contact];
+			storable.forEach(function (element) {
+				// Restore
+				var value = localStorage.getItem(element.id);
+				if (value) {
+					if (element.nodeName === 'INPUT') {
+						element.value = value;
+					}
+					if (element.nodeName === 'DIV') {
+						element.innerHTML = value;
+					}
+				}
+
+				// Save
+				element.addEventListener('input', function (e) {
+					localStorage.setItem(e.target.id, element.nodeName === 'INPUT' ? e.target.value : e.target.innerHTML);
+				});
+			});
 
 			// Set user language for hypenation
 			document.documentElement.setAttribute('lang', navigator.language.split('-')[0]);
@@ -129,6 +150,7 @@
 
 			// Resize text area
 			content.addEventListener('input', function (e) {
+				
 				resizeContent(e.target);
 			});
 
