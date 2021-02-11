@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Headline</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta property="og:title" content="Open Graph Tags – praktische Tipps für Deine Website"/>
+		<meta property="og:description" content="Im Ryte Magazin findest du brandaktuelle Tipps rund um Open Graph Tags."/> 
+		<meta property="og:type" content="website"/>
+		<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.css" rel="stylesheet"/>
+		<style type="text/css">
+		body {
+			background-color: #f9f9f9;
+
+			padding: 2em;
+		}
+		.a4 {
+			height: 420mm;
+			width: 297mm;
+
+			padding: 15mm 25mm;
+
+			margin-bottom: 2em;
+			margin-left: auto;
+			margin-right: auto;
+
+			overflow: auto;
+
+			background-color: white;
+
+			-webkit-box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+			box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+		}
+
+		#content {
+			line-height: 1.428;
+
+			hyphens: auto;
+		}
+		#content > div:not(:last-child) {
+			margin-bottom: calc(0.5em * 1.428);
+		}
+
+		#helper > p:not(:last-child) {
+			margin-bottom: calc(0.5em * 1.428);
+		}
+
+	    @page {
+   			size: 297mm 420mm;
+	        margin: 0;
+	    }
+
+		@media print {
+			body {
+				padding: 0;
+				background-color: #ffffff;
+			}
+
+			.a4 {
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
+
+				margin-bottom: 0;
+			}
+
+			#content {
+				border: none !important;
+			}
+
+    		.no-print {
+        		display: none !important;
+    		}
+		}
+		</style>
+	</head>
+	<body>
+		<div class="a4 ">
+			<form role="form" autocomplete="on" class="h-full flex flex-col">
+				<h1><input id="headline" type="text" class="text-center uppercase text-9xl w-full font-bold placeholder-gray-300 outline-none" placeholder="Headline" /></h1>
+
+				<img class="rounded-sm shadow-md relative mt-2 mr-auto mb-2 ml-auto w-3/4" id="image" />
+				<div class="text-center text-6xl"><input id="name" type="text" class="font-bold text-center outline-none" placeholder="Name" /></div>
+				<div class="text-center no-print"><input id="file" type="file"/></div>
+
+				
+				<div contenteditable id="content" class="flex-grow mb-4 text-5xl resize-none w-full h-full overflow-auto outline-none border border-dotted border-pink-800">
+					<div>We are missing our cat ___ since ______.</div>
+					<div>If you have seen or heard anything about this cat, please contact us.</div>
+				</div>
+
+				<div class="flex">
+					<div class="flex-grow">
+						<div class="p-8 mr-20 bg-pink-800 shadow-lg rounded-3xl text-4xl">
+							<input id="person" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Contact" />
+							<input id="tel" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Phone" />
+						</div>
+					</div>
+
+					<div id="qrcode" class="flex-shrink-0"></div>
+				</div>
+			</form>
+		</div>
+
+		<div id="helper" class="absolute top-5 right-5 p-5 w-96 bg-pink-800 shadow-lg rounded-3xl text-white no-print">
+			<p>Please add a&nbsp;headline, a&nbsp;photo, a&nbsp;name, a&nbsp;description, your&nbsp;name and phone&nbsp;number of your loss.</p>
+			<p>The qr code at the bottom of the page can be scanned for phone number</p> 
+			<p>Use your browser print dialog to create a pdf or print directly.</p>
+			<p>This dialog, file selector and border around discription will be hidden automatically.</p>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			const headline = document.getElementById('headline');
+			const name = document.getElementById('name');
+			const content = document.getElementById('content');
+			const tel = document.getElementById('tel');
+			const fileButton = document.getElementById('file');
+			const image = document.getElementById('image');
+
+			// Set user language for hypenation
+			document.documentElement.setAttribute('lang', navigator.language.split('-')[0]);
+
+			// Set document title to headline: name
+			headline.addEventListener('input', changeTitle);
+			name.addEventListener('input', changeTitle);
+
+			// Resize text area
+			content.addEventListener('input', function (e) {
+				resizeContent(e.target);
+			});
+
+			// Add qrcode
+			const qrcode = new QRCode(document.getElementById('qrcode'), {
+			    text: 'tel:' + tel.value,
+			    width: 160,
+			    height: 160
+			});
+
+			// Generate qrcode
+			tel.addEventListener('input', function (e) {
+				qrcode.makeCode('tel:' + e.target.value);
+			})
+
+			// Add image
+			fileButton.addEventListener('change', function (e) {
+				var file = e.target.files[0];
+
+				fileName = file.name;
+
+			    image.file = file;
+			    
+			    var reader = new FileReader();
+			    reader.onload = (function(aImg) {
+			    	return function(e) {
+			    		aImg.src = e.target.result;
+			    		resizeContent(content);
+			    		image.style.display = 'block';
+			    		fileButton.style.display = 'none';
+			    	};
+			    })(image);
+			    reader.readAsDataURL(file);
+			});
+
+			// Hide image
+			image.addEventListener('click', function () {
+				image.style.display = 'none';
+				fileButton.style.display = 'block';
+			})
+
+
+			let fontSize = parseInt(content.style.fontSize) || 48;
+			function resizeContent(element) {
+				while (element.scrollHeight === element.clientHeight && fontSize <= 48) {
+			     	fontSize = fontSize + 0.25;
+			     	element.style.fontSize = fontSize + 'px';
+				}
+				while (element.scrollHeight > element.clientHeight) {
+			     	fontSize = fontSize - 0.25;
+			     	element.style.fontSize = fontSize + 'px';
+				}
+			}
+
+			function changeTitle() {
+				document.title = headline.value + ': ' + name.value;
+			}
+		});
+		</script>
+	</body>
+</html>
