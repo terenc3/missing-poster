@@ -14,6 +14,7 @@ Single-page application to create missing poster for lost cats etc.
 + Size adjusted to fit DIN A4 perfectly
 + Integrated QR code of phone number
 + Auto size text size if you want to provide more info
++ Browser language detection for hypenation support
 
 # Example
 ![Example page](https://github.com/terenc3/missing-poster/raw/master/example.png?raw=true)
