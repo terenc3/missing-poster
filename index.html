@@ -78,7 +78,10 @@
 	<body>
 		<div class="a4 ">
 			<form role="form" autocomplete="on" class="h-full flex flex-col">
-				<h1><input id="headline" type="text" class="text-center uppercase text-9xl w-full font-bold placeholder-gray-300 outline-none" placeholder="Headline" /></h1>
+				<h1>
+					<label for="headline" class="hidden">Headline</label>
+					<input id="headline" type="text" class="text-center uppercase text-9xl w-full font-bold placeholder-gray-300 outline-none" placeholder="Headline" />
+				</h1>
 
 				<div>
 					<img id="image"class="rounded-sm shadow-md relative" style="display: none;" />
@@ -87,10 +90,14 @@
 						<input id="file" type="file" accept="image/*" />
 					</div>
 				</div>
-				<div class="text-center text-6xl"><input id="name" type="text" class="font-bold text-center outline-none" placeholder="Name" /></div>
+				<div class="text-center text-6xl">
+					<label for="name" class="hidden">Name</label>
+					<input id="name" type="text" class="font-bold text-center outline-none" placeholder="Name" />
+				</div>
 
 				
-				<div contenteditable id="content" class="flex-grow mb-4 text-5xl resize-none w-full h-full overflow-auto outline-none border border-dotted border-pink-800">
+				<label for="content" class="hidden">Content</label>
+				<div role="textbox" aria-multiline="true" contenteditable id="content" class="flex-grow mb-4 text-5xl resize-none w-full h-full overflow-auto outline-none border border-dotted border-pink-800">
 					<div>We are missing our cat ___ since ______.</div>
 					<div>If you have seen or heard anything about this cat, please contact us.</div>
 				</div>
@@ -98,7 +105,9 @@
 				<div class="flex">
 					<div class="flex-grow">
 						<div class="p-8 mr-20 bg-pink-800 shadow-lg rounded-3xl text-4xl">
+							<label for="contact" class="hidden">Contact</label>
 							<input id="contact" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Contact" />
+							<label for="tel" class="hidden">Phone</label>
 							<input id="tel" type="text" class="w-full font-bold bg-pink-800 text-white placeholder-gray-300 outline-none" placeholder="Phone" />
 						</div>
 					</div>
